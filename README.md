@@ -1,6 +1,6 @@
 # lrcdl
 
-lrcdl is a command-line tool for fetching lyrics from track files using https://lrclib.net.
+lrcdl is a command-line tool for fetching lyrics from audio files using https://lrclib.net.
 
 ## Installation
 
@@ -13,13 +13,13 @@ pip install lrcdl
 Download lyrics (.lrc) from a track:
 
 ```
-lrcdl track.mp3
+lrcdl song.mp3
 ```
 
 By default, lrcdl will only download __timed__ lyrics if they're found. To include plain, non-timed lyrics, use the `--include-plain` flag:
 
 ```
-lrcdl track.mp3 --include-plain
+lrcdl song.mp3 --include-plain
 ```
 
 Which will download plain lyrics only if timed ones were not found.
