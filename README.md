@@ -4,7 +4,9 @@ lrcdl is a command-line tool for fetching lyrics from track files using https://
 
 ## Installation
 
-Soon.
+```
+pip install lrcdl
+```
 
 ## Basic Usage
 

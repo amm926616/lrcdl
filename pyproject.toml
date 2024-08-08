@@ -1,9 +1,12 @@
 [tool.poetry]
 name = "lrcdl"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["viown <48097677+viown@users.noreply.github.com>"]
 readme = "README.md"
+
+[tool.poetry.scripts]
+lrcdl = "lrcdl.cli:lrcdl"
 
 [tool.poetry.dependencies]
 python = "^3.11"

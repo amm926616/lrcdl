@@ -16,19 +16,18 @@ def error(message, exit=False):
         sys.exit()
 
 @click.command()
-@click.option('--title')
-@click.option('--album')
-@click.option('--artist')
-@click.option('--cache')
-@click.option('--recursive', is_flag=True)
-@click.option('--include-plain', is_flag=True)
+@click.option('--cache', help='An optional cache file to skip already-checked files on next run (used with --recursive only)')
+@click.option('--recursive', is_flag=True, help='Recursively search for tracks and download lyrics for them')
+@click.option('--include-plain', is_flag=True, help='Download plain, non-timed lyrics when timed lyrics are not available')
+@click.option('--title', help='Override file metadata and specify a manual title')
+@click.option('--album', help='Override file metadata and specify a manual album')
+@click.option('--artist', help='Override file metadata and specify a manual artist')
 @click.argument('path', type=click.Path())
 def lrcdl(path, title, album, artist, cache, recursive, include_plain):
     tracks = []
     skip = []
 
     if recursive:
-        
         if cache and os.path.isdir(cache):
             error("Invalid cache, must be a file", exit=True)
         elif cache and os.path.exists(cache):
