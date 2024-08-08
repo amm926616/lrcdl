@@ -9,7 +9,7 @@ from lrcdl.exceptions import (
     NotEnoughMetadata
 )
 
-SUPPORTED_EXTENSIONS = [".mp3", ".flac"]
+SUPPORTED_EXTENSIONS = [".mp3", ".flac", ".m4a"]
 
 class Track:
     def __init__(self, path, title=None, album=None, artist=None):
