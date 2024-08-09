@@ -16,8 +16,8 @@ def error(message, exit=False):
         sys.exit()
 
 @click.command()
-@click.option('--cache', help='An optional cache file to skip already-checked files on next run (used with --recursive only)')
-@click.option('--recursive', is_flag=True, help='Recursively search for tracks and download lyrics for them')
+@click.option('--cache', '-c', help='An optional cache file to skip already-checked files on next run (used with --recursive only)')
+@click.option('--recursive', '-r', is_flag=True, help='Recursively search for tracks and download lyrics for them')
 @click.option('--include-plain', is_flag=True, help='Download plain, non-timed lyrics when timed lyrics are not available')
 @click.option('--title', help='Override file metadata and specify a manual title')
 @click.option('--album', help='Override file metadata and specify a manual album')

@@ -35,10 +35,10 @@ lrcdl "Ghost Division.flac" --title "Ghost Division" --album "The Art of War" --
 
 ### Downloading lyrics for entire music library
 
-If you have a music library and you want to download lyrics for all tracks, you can use the `--recursive` option while specifying a directory as the path:
+If you have a music library and you want to download lyrics for all tracks, you can use the `-r`/`--recursive` option while specifying a directory as the path:
 
 ```
-lrcdl /PATH/TO/MUSIC --recursive
+lrcdl /PATH/TO/MUSIC -r
 ```
 
 Note that lrcdl will skip files that already have an LRC file and will not overwrite them.
@@ -48,5 +48,5 @@ This command can be safely setup as a scheduled task or a cron job to download l
 To improve performance and avoid unnecessary strain on lrclib's servers, you're highly advised to specify a cache file to skip already-checked files on the next run:
 
 ```
-lrcdl /PATH/TO/MUSIC/ --recursive --cache /PATH/TO/CACHE/cache.txt
+lrcdl /PATH/TO/MUSIC/ -r --cache /PATH/TO/CACHE/cache.txt
 ```
