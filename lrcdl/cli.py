@@ -30,7 +30,8 @@ def lrcdl(path, title, album, artist, cache, recursive, include_plain):
         recursive=recursive,
         title=title,
         album=album,
-        artist=artist
+        artist=artist,
+        include_plain=include_plain
     )
 
     tracks = []
