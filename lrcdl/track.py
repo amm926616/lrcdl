@@ -12,9 +12,10 @@ from lrcdl.exceptions import (
 SUPPORTED_EXTENSIONS = [".mp3", ".flac", ".m4a"]
 
 class Track:
-    def __init__(self, path, title=None, album=None, artist=None):
+    def __init__(self, path, options):
         self.path = path
         self.split_path = os.path.splitext(self.path)
+        self.options = options
 
         if not os.path.exists(self.path):
             raise FileNotFoundError()
@@ -26,9 +27,9 @@ class Track:
         self.file = mutagen.File(self.path)
         
         metadata = get_metadata(self.file)
-        self.title = title or metadata["title"]
-        self.album = album or metadata["album"]
-        self.artist = artist or metadata["artist"]
+        self.title = self.options.title or metadata["title"]
+        self.album = self.options.album or metadata["album"]
+        self.artist = self.options.artist or metadata["artist"]
 
     def download_lyrics(self, include_plain=False):
         if os.path.exists(self.split_path[0] + ".lrc"):

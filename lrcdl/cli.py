@@ -2,6 +2,7 @@ import click
 import os
 import sys
 from lrcdl.track import Track, SUPPORTED_EXTENSIONS
+from lrcdl.options import Options
 from lrcdl.exceptions import (
     UnsupportedExtension,
     LyricsAlreadyExists,
@@ -24,6 +25,14 @@ def error(message, exit=False):
 @click.option('--artist', help='Override file metadata and specify a manual artist')
 @click.argument('path', type=click.Path())
 def lrcdl(path, title, album, artist, cache, recursive, include_plain):
+    options = Options(
+        cache=cache,
+        recursive=recursive,
+        title=title,
+        album=album,
+        artist=artist
+    )
+
     tracks = []
     skip = []
 
@@ -54,7 +63,7 @@ def lrcdl(path, title, album, artist, cache, recursive, include_plain):
         click.echo(f"Downloading lyrics for {click.style(track_path, bold=True)} {progress}")
         
         try:
-            track = Track(track_path, title, album, artist)
+            track = Track(track_path, options)
             track.download_lyrics(include_plain)
             click.echo(f"Lyrics successfully downloaded for {click.style(track_path, bold=True)}")
         except IsADirectoryError:
