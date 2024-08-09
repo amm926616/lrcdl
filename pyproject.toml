@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lrcdl"
-version = "0.2.4"
+version = "0.2.5"
 description = ""
 authors = ["viown <48097677+viown@users.noreply.github.com>"]
 readme = "README.md"
