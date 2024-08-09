@@ -64,7 +64,7 @@ def lrcdl(path, title, album, artist, cache, recursive, include_plain):
         
         try:
             track = Track(track_path, options)
-            track.download_lyrics(include_plain)
+            track.download_lyrics()
             click.echo(f"Lyrics successfully downloaded for {click.style(track_path, bold=True)}")
         except IsADirectoryError:
             error("A directory was specified when a file path was expected")

@@ -50,3 +50,18 @@ To improve performance and avoid unnecessary strain on lrclib's servers, you're 
 ```
 lrcdl /PATH/TO/MUSIC/ -r --cache /PATH/TO/CACHE/cache.txt
 ```
+
+### Python API
+
+To use within Python:
+
+```py
+from lrcdl import Track, Options
+
+options = Options()
+track = Track("/path/to/song.mp3", options)
+
+track.download_lyrics()
+# or specify a path
+track.download_lyrics("/path/to/song.lrc")
+```

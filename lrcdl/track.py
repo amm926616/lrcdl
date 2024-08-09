@@ -31,8 +31,9 @@ class Track:
         self.album = self.options.album or metadata["album"]
         self.artist = self.options.artist or metadata["artist"]
 
-    def download_lyrics(self, include_plain=False):
-        if os.path.exists(self.split_path[0] + ".lrc"):
+    def download_lyrics(self, download_path=None):
+        download_path = download_path or self.split_path[0] + ".lrc"
+        if os.path.exists(download_path):
             raise LyricsAlreadyExists()
         if not (self.title and self.album and self.artist):
             missing = []
@@ -52,10 +53,10 @@ class Track:
 
         if lyrics["syncedLyrics"]:
             lyrics_text = lyrics["syncedLyrics"]
-        elif lyrics["plainLyrics"] and include_plain:
+        elif lyrics["plainLyrics"] and self.options.include_plain:
             lyrics_text = lyrics["plainLyrics"]
         else:
             raise LyricsNotAvailable()
         
-        with open(self.split_path[0] + ".lrc", "w") as f:
+        with open(download_path, "w") as f:
             f.write(lyrics_text)
