@@ -17,6 +17,7 @@ def error(message, exit=False):
         sys.exit()
 
 @click.command()
+@click.option('--download-path', '-p', help="Optionally specify a custom download path to place the LRC file")
 @click.option('--cache', '-c', help='An optional cache file to skip already-checked files on next run (used with --recursive only)')
 @click.option('--recursive', '-r', is_flag=True, help='Recursively search for tracks and download lyrics for them')
 @click.option('--include-plain', is_flag=True, help='Download plain, non-timed lyrics when timed lyrics are not available')
@@ -24,14 +25,15 @@ def error(message, exit=False):
 @click.option('--album', help='Override file metadata and specify a manual album')
 @click.option('--artist', help='Override file metadata and specify a manual artist')
 @click.argument('path', type=click.Path())
-def lrcdl(path, title, album, artist, cache, recursive, include_plain):
+def lrcdl(path, title, album, artist, cache, recursive, include_plain, download_path):
     options = Options(
         cache=cache,
         recursive=recursive,
         title=title,
         album=album,
         artist=artist,
-        include_plain=include_plain
+        include_plain=include_plain,
+        download_path=download_path
     )
 
     tracks = []
@@ -64,8 +66,8 @@ def lrcdl(path, title, album, artist, cache, recursive, include_plain):
         click.echo(f"Downloading lyrics for {click.style(track_path, bold=True)} {progress}")
         
         try:
-            track = Track(track_path, options)
-            track.download_lyrics()
+            track = Track(track_path)
+            track.download_lyrics(options)
             click.echo(f"Lyrics successfully downloaded for {click.style(track_path, bold=True)}")
         except IsADirectoryError:
             error("A directory was specified when a file path was expected")

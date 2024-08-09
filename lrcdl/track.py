@@ -12,10 +12,9 @@ from lrcdl.exceptions import (
 SUPPORTED_EXTENSIONS = [".mp3", ".flac", ".m4a"]
 
 class Track:
-    def __init__(self, path, options):
+    def __init__(self, path):
         self.path = path
         self.split_path = os.path.splitext(self.path)
-        self.options = options
 
         if not os.path.exists(self.path):
             raise FileNotFoundError()
@@ -25,35 +24,35 @@ class Track:
             raise UnsupportedExtension()
         
         self.file = mutagen.File(self.path)
-        
-        metadata = get_metadata(self.file)
-        self.title = self.options.title or metadata["title"]
-        self.album = self.options.album or metadata["album"]
-        self.artist = self.options.artist or metadata["artist"]
 
-    def download_lyrics(self, download_path=None):
-        download_path = download_path or self.split_path[0] + ".lrc"
+    def download_lyrics(self, options):
+        metadata = get_metadata(self.file)
+        title = options.title or metadata["title"]
+        album = options.album or metadata["album"]
+        artist = options.artist or metadata["artist"]
+        download_path = options.download_path or self.split_path[0] + ".lrc"
+
         if os.path.exists(download_path):
             raise LyricsAlreadyExists()
-        if not (self.title and self.album and self.artist):
+        if not (title and album and artist):
             missing = []
 
-            if not self.title:
+            if not title:
                 missing.append("title")
-            if not self.album:
+            if not album:
                 missing.append("album")
-            if not self.artist:
+            if not artist:
                 missing.append("artist")
 
             raise NotEnoughMetadata(missing)
 
-        lyrics = api.get_lyrics(self.title, self.artist, self.album, round(self.file.info.length))
+        lyrics = api.get_lyrics(title, artist, album, round(self.file.info.length))
 
         lyrics_text = None
 
         if lyrics["syncedLyrics"]:
             lyrics_text = lyrics["syncedLyrics"]
-        elif lyrics["plainLyrics"] and self.options.include_plain:
+        elif lyrics["plainLyrics"] and options.include_plain:
             lyrics_text = lyrics["plainLyrics"]
         else:
             raise LyricsNotAvailable()
