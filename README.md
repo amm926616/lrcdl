@@ -58,11 +58,12 @@ To use within Python:
 ```py
 from lrcdl import Track, Options
 
+
+track = Track("/path/to/song.mp3")
+
 options = Options()
 # or specify a path
 options = Options(download_path="/path/file.lrc")
-
-track = Track("/path/to/song.mp3")
 
 track.download_lyrics(options)
 ```
