@@ -1,6 +1,6 @@
 import requests
 from importlib.metadata import version
-from lrcdl.exceptions import TrackNotFound
+from lrcdl.exceptions import TrackNotFound, RequestFailed
 
 DEFAULT_HOST = "https://lrclib.net"
 DEFAULT_HEADERS = {
@@ -15,8 +15,11 @@ def get_lyrics(track_name, artist_name, album_name, duration):
         "duration": duration
     }
     r = requests.get(f"{DEFAULT_HOST}/api/get", params=params, headers=DEFAULT_HEADERS)
+    print(r.text)
 
     if r.ok:
         return r.json()
     elif r.status_code == 404:
         raise TrackNotFound()
+    else:
+        raise RequestFailed(r.text)

@@ -1,6 +1,6 @@
 import mutagen
 import os
-from lrcdl import api
+from lrcdl import provider
 from lrcdl.utils import get_metadata
 from lrcdl.exceptions import (
     LyricsAlreadyExists,
@@ -46,7 +46,7 @@ class Track:
 
             raise NotEnoughMetadata(missing)
 
-        lyrics = api.get_lyrics(title, artist, album, round(self.file.info.length))
+        lyrics = provider.get_lyrics(title, artist, album, round(self.file.info.length))
 
         lyrics_text = None
 

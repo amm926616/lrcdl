@@ -8,7 +8,8 @@ from lrcdl.exceptions import (
     LyricsAlreadyExists,
     LyricsNotAvailable,
     TrackNotFound,
-    NotEnoughMetadata
+    NotEnoughMetadata,
+    RequestFailed
 )
 
 def error(message, exit=False):
@@ -82,6 +83,8 @@ def lrcdl(path, title, album, artist, cache, recursive, include_plain, download_
         except (LyricsNotAvailable, TrackNotFound):
             skip.append(track_path)
             click.echo(f"Could not find suitable lyrics for {click.style(track_path, bold=True)}")
+        except RequestFailed as e:
+            click.echo(f"Request failed while fetching lyrics: {e.args[0]}")
 
     if cache:
         with open(cache, 'w') as cachefile:

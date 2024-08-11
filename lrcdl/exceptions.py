@@ -12,3 +12,6 @@ class UnsupportedExtension(Exception):
 
 class NotEnoughMetadata(Exception):
     pass
+
+class RequestFailed(Exception):
+    pass
