@@ -15,7 +15,6 @@ def get_lyrics(track_name, artist_name, album_name, duration):
         "duration": duration
     }
     r = requests.get(f"{DEFAULT_HOST}/api/get", params=params, headers=DEFAULT_HEADERS)
-    print(r.text)
 
     if r.ok:
         return r.json()
