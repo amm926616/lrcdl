@@ -1,6 +1,6 @@
-import click
 import os
 import sys
+import click
 from lrcdl.track import Track, SUPPORTED_EXTENSIONS
 from lrcdl.options import Options
 from lrcdl.exceptions import (
@@ -12,10 +12,8 @@ from lrcdl.exceptions import (
     RequestFailed
 )
 
-def error(message, exit=False):
+def error(message):
     click.echo(f"{click.style('Error:', fg='red')} {message}")
-    if exit:
-        sys.exit()
 
 @click.command()
 @click.option('--download-path', '-p', help="Optionally specify a custom download path to place the LRC file")
@@ -42,15 +40,18 @@ def lrcdl(path, title, album, artist, cache, recursive, include_plain, download_
 
     if recursive:
         if cache and os.path.isdir(cache):
-            error("Invalid cache, must be a file", exit=True)
+            error("Invalid cache, must be a file")
+            return
         elif cache and os.path.exists(cache):
             with open(cache, 'r') as cachefile:
                 skip = cachefile.read().split('\n')
 
         if not os.path.isdir(path):
-            error("You must specify a directory when --recursive is on", exit=True)
+            error("You must specify a directory when --recursive is on")
+            return
         if title or album or artist:
-            error("You cannot specify --title, --album or --artist when --recursive is on", exit=True)
+            error("You cannot specify --title, --album or --artist when --recursive is on")
+            return
         
         click.echo("Scanning directory...")
         for subdir, _, files in os.walk(path):

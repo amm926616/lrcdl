@@ -1,5 +1,5 @@
-import requests
 from importlib.metadata import version
+import requests
 from lrcdl.exceptions import TrackNotFound, RequestFailed
 
 DEFAULT_HOST = "https://lrclib.net"

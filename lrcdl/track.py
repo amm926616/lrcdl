@@ -1,5 +1,5 @@
-import mutagen
 import os
+import mutagen
 from lrcdl import provider
 from lrcdl.utils import get_metadata
 from lrcdl.exceptions import (
