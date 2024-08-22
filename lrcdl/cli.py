@@ -1,6 +1,6 @@
 import os
-import sys
 import click
+from mutagen import MutagenError
 from lrcdl.track import Track, SUPPORTED_EXTENSIONS
 from lrcdl.options import Options
 from lrcdl.exceptions import (
@@ -86,6 +86,8 @@ def lrcdl(path, title, album, artist, cache, recursive, include_plain, download_
             click.echo(f"Could not find suitable lyrics for {click.style(track_path, bold=True)}")
         except RequestFailed as e:
             click.echo(f"Request failed while fetching lyrics: {e.args[0]}")
+        except MutagenError:
+            error(f"Failed to open file {track_path}, possibly invalid data.")
 
     if cache:
         with open(cache, 'w') as cachefile:
