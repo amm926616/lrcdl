@@ -68,7 +68,7 @@ def lrcdl(path, title, album, artist, cache, recursive, include_plain, download_
         click.echo(f"Downloading lyrics for {click.style(track_path, bold=True)} {progress}")
         
         try:
-            track = Track(track_path)
+            track = Track(track_path)  # Ensure Track handles Ogg files
             track.download_lyrics(options)
             click.echo(f"Lyrics successfully downloaded for {click.style(track_path, bold=True)}")
         except IsADirectoryError:

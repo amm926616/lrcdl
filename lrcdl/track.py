@@ -9,7 +9,7 @@ from lrcdl.exceptions import (
     NotEnoughMetadata
 )
 
-SUPPORTED_EXTENSIONS = [".mp3", ".flac", ".m4a"]
+SUPPORTED_EXTENSIONS = [".mp3", ".flac", ".m4a", ".ogg"]  # Added .ogg
 
 class Track:
     def __init__(self, path):
@@ -46,13 +46,16 @@ class Track:
 
             raise NotEnoughMetadata(missing)
 
-        lyrics = provider.get_lyrics(title, artist, album, round(self.file.info.length))
+        # Ensure duration is correctly fetched
+        duration = round(self.file.info.length)  # This should work for Ogg too
+
+        lyrics = provider.get_lyrics(title, artist, album, duration)
 
         lyrics_text = None
 
-        if lyrics["syncedLyrics"]:
+        if lyrics.get("syncedLyrics"):
             lyrics_text = lyrics["syncedLyrics"]
-        elif lyrics["plainLyrics"] and options.include_plain:
+        elif lyrics.get("plainLyrics") and options.include_plain:
             lyrics_text = lyrics["plainLyrics"]
         else:
             raise LyricsNotAvailable()

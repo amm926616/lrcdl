@@ -1,6 +1,7 @@
 from mutagen.flac import FLAC
 from mutagen.mp3 import MP3
 from mutagen.mp4 import MP4
+from mutagen.oggvorbis import OggVorbis  # Import OggVorbis
 
 metadata_mapping = {
     MP3: {
@@ -17,6 +18,11 @@ metadata_mapping = {
         "title": "©nam",
         "album": "©alb",
         "artist": "©ART"
+    },
+    OggVorbis: {  # Added OggVorbis mapping
+        "title": "title",
+        "album": "album",
+        "artist": "artist"
     }
 }
 
