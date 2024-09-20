@@ -60,5 +60,5 @@ class Track:
         else:
             raise LyricsNotAvailable()
         
-        with open(download_path, "w") as f:
+        with open(download_path, "w", encoding="utf-8-sig") as f:
             f.write(lyrics_text)
